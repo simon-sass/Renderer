@@ -25,7 +25,7 @@ Rasterizer rasterizer;
 bool isRunning = false;
 
 Triangle triangle = Triangle({50., 200.}, {500., 200.}, {50., 450.});
-Circle circle = Circle({400., 300.}, 100);
+Circle circle = Circle({800., 600.}, 100);
 
 void renderFramebuffer() {
     SDL_UpdateTexture(
