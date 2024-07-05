@@ -23,7 +23,9 @@ class Triangle {
     vec2D e0, e1, e2;
     int x_min, y_min, x_max, y_max;
     Triangle(vec2D v0, vec2D v1, vec2D v2);
+    void updateData();
     bool isPointInTriangle(vec2D p);
+    void rotate(float angle, vec2D p);
 };
 
 class Circle {
