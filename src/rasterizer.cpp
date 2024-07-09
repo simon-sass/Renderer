@@ -1,6 +1,18 @@
 #include <rasterizer.h>
 #include <iostream>
 
+color rgb[3] = {
+    {0xFF, 0x00, 0x00},
+    {0x00, 0xFF, 0x00},
+    {0x00, 0x00, 0xFF}
+};
+
+color colors[3] = {
+    {0xFD, 0x78, 0x8B},
+    {0xFE, 0xDC, 0xDB},
+    {0xFE, 0x66, 0x94}
+};
+
 Rasterizer::Rasterizer() {
     framebuffer = nullptr;
 }
@@ -32,8 +44,24 @@ void Rasterizer::drawTriangle(Triangle triangle) {
     for (size_t y = y_min; y <= triangle.y_max; y++) {
         for (size_t x = x_min; x <= triangle.x_max; x++) {
             vec2D p = {x,y};
+
             if (triangle.isPointInTriangle(p)) {
-                drawPixel(x, y, white);
+                float w0 = vec2DCross(triangle.e1, vec2DSub(p,triangle.p1)) / triangle.area;
+                float w1 = vec2DCross(triangle.e2, vec2DSub(p,triangle.p2)) / triangle.area;
+                float w2 = vec2DCross(triangle.e0, vec2DSub(p,triangle.p0)) / triangle.area;
+
+                int r = w0*rgb[0].r + w1*rgb[1].r + w2*rgb[2].r;
+                int g = w0*rgb[0].g + w1*rgb[1].g + w2*rgb[2].g;
+                int b = w0*rgb[0].b + w1*rgb[1].b + w2*rgb[2].b;
+                int a = 0xFF;
+
+                uint32_t interp = 0x00000000;
+                interp = (interp | a) << 8;
+                interp = (interp | r) << 8;
+                interp = (interp | g) << 8;
+                interp = (interp | b) << 8;
+
+                drawPixel(x, y, interp);
             }
         }
     }

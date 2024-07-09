@@ -27,6 +27,12 @@ bool isRunning = false;
 Triangle triangle = Triangle({50., 200.}, {500., 200.}, {50., 450.});
 Circle circle = Circle({800., 600.}, 100);
 
+Triangle triangles[3] = {
+    Triangle({10, 10}, {20, 10}, {10, 20}),
+    Triangle({20, 10}, {20, 20}, {10, 20}),
+    Triangle({30, 30}, {40, 55}, {20, 50})
+};
+
 void renderFramebuffer() {
     SDL_UpdateTexture(
         framebufferTexture,
@@ -46,8 +52,12 @@ void loop() {
             }
         }
         rasterizer.clearFramebuffer(black);
-        triangle.rotate(0.01, {400, 700});
-        rasterizer.drawTriangle(triangle);
+        triangles[0].rotate(0.005, {15, 15});
+        triangles[1].rotate(0.005, {15, 15});
+        triangles[2].rotate(0.005, {40, 30});
+        rasterizer.drawTriangle(triangles[0]);
+        rasterizer.drawTriangle(triangles[1]);
+        rasterizer.drawTriangle(triangles[2]);
         renderFramebuffer();
     }
 }

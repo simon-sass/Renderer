@@ -4,11 +4,17 @@
 #include <cstdint>
 #include <shape.h>
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 80
+#define SCREEN_HEIGHT 60
 
 #define white 0xFFFFFFFF
 #define black 0x000000FF
+
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} color;
 
 class Rasterizer {
     public:

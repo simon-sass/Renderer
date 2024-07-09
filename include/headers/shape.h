@@ -21,9 +21,12 @@ class Triangle {
     public:
     vec2D p0, p1, p2;
     vec2D e0, e1, e2;
+    int b0, b1, b2;
     int x_min, y_min, x_max, y_max;
+    float area;
     Triangle(vec2D v0, vec2D v1, vec2D v2);
     void updateData();
+    bool isTopLeft(vec2D edge);
     bool isPointInTriangle(vec2D p);
     void rotate(float angle, vec2D p);
 };

@@ -18,6 +18,11 @@ vec2D vec2DSub(vec2D v1, vec2D v2) {
     return result;
 }
 
+vec2D vec2DMul(vec2D v, float factor) {
+    vec2D result = {v.x * factor, v.y * factor};
+    return result;
+}
+
 float vec2DLength(vec2D v) {
     return sqrt(pow(v.x, 2) + pow(v.y, 2));
 }
@@ -41,22 +46,23 @@ void Triangle::updateData() {
     e0 = vec2DSub(p1, p0);
     e1 = vec2DSub(p2, p1);
     e2 = vec2DSub(p0, p2);
+    b0 = !isTopLeft(e0);
+    b1 = !isTopLeft(e1);
+    b2 = !isTopLeft(e2);
+    area = vec2DCross(e0, vec2DSub(p2, p0));
+}
+
+bool Triangle::isTopLeft(vec2D edge) {
+    bool isTopEdge = edge.y == 0 && edge.x > 0;
+    bool isLeftEdge = edge.y < 0;
+    return isTopEdge || isLeftEdge;
 }
 
 bool Triangle::isPointInTriangle(vec2D p) {
     vec2D v0 = vec2DSub(p, p0);
     vec2D v1 = vec2DSub(p, p1);
     vec2D v2 = vec2DSub(p, p2);
-    if (vec2DCross(e0, v0) < 0) {
-        return false;
-    }
-    if (vec2DCross(e1, v1) < 0) {
-        return false;
-    }
-    if (vec2DCross(e2, v2) < 0) {
-        return false;
-    }
-    return true;
+    return vec2DCross(e0, v0) >= 0 && vec2DCross(e1, v1) >= 0 && vec2DCross(e2, v2) >= 0;
 }
 
 void Triangle::rotate(float angle, vec2D p) {
